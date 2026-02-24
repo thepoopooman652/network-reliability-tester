@@ -7,7 +7,7 @@
     Network Reliability Tester Version 1.0.0
 .COPYRIGHT
     Copyright 2026 ProishTheIdiot
-    GNU General Public License v3 - See LICENSE file included in original GitHub repo
+    GNU General Public License v3 - See LICENSE file
 .GITHUB
     Original repository:
         https://github.com/thepoopooman652/network-reliability-tester/
@@ -27,10 +27,9 @@ $PingTargets = [ordered]@{
     "Google DNS"          = "8.8.8.8"
     "Steam (Valve)"       = "208.64.200.1"
     "Valve CS2 (US East)" = "162.254.193.6"    # Valve SDR US-East, confirmed ICMP
-    "Akamai CDN"          = "23.215.0.22"      # Akamai gaming CDN, powers many game backends, reliably responds to ICMP
+    "Level3 Backbone"     = "4.2.2.2"          # Lumen/Level3 Tier-1 carrier, carries traffic for most game servers, always responds to ICMP
     "PSN (Sony)"          = "69.36.135.129"    # Sony Interactive Entertainment LLC own ASN, LA datacenter
     "Battle.net"          = "166.117.114.163"
-    "Level3 Backbone"     = "4.2.2.2"          # Tier-1 carrier node, always responds
     "Microsoft (Bing)"    = "204.79.197.200"
 }
 
@@ -281,10 +280,9 @@ $colorMap = @{
     "Google DNS"          = "255,99,132"
     "Steam (Valve)"       = "75,192,192"
     "Valve CS2 (US East)" = "0,220,180"
-    "Akamai CDN"          = "255,159,64"
+    "Level3 Backbone"     = "255,159,64"
     "PSN (Sony)"          = "200,80,255"
     "Battle.net"          = "255,80,80"
-    "Level3 Backbone"     = "255,205,86"
     "Microsoft (Bing)"    = "99,255,132"
 }
 
