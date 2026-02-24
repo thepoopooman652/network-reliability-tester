@@ -93,7 +93,7 @@ Both are displayed live in the console during the test and graphed separately in
 
 ## Report
 
-At the end of the test a `WiFi-Report_YYYYMMDD_HHMMSS.html` file is saved to the same directory as the script and opened in your default browser automatically.
+At the end of the test a `WiFi-Report_YYYYMMDD_HHMMSS.html` file is saved to the same directory as the script and opened in your default browser automatically. The file should be around 45KB in size.
 
 The report contains:
 
