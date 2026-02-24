@@ -7,7 +7,7 @@
     Network Reliability Tester Version 1.0.0
 .COPYRIGHT
     Copyright 2026 ProishTheIdiot
-    GNU General Public License v3 - See LICENSE file
+    GNU General Public License v3 - See LICENSE file included in original GitHub repo
 .GITHUB
     Original repository:
         https://github.com/thepoopooman652/network-reliability-tester/
