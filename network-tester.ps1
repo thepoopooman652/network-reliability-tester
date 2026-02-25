@@ -1,8 +1,9 @@
 #Requires -Version 5.1
 <#
 .CLAUDE_NOTICE
-    THIS PROJECT WAS VIBE CODED BY CLAUDE SONNET 4.6 FOR VERSION 1.0
+    THIS PROJECT WAS VIBE CODED BY CLAUDE SONNET 4.6 FOR VERSION 1.0.0
     USE AT YOUR OWN RISK
+    Only version 1.0.0 was written by Claude, new versions are fully human written, but this notice will remain in all versions of the script
 .VERSION
     Network Reliability Tester Version 1.0.0
 .COPYRIGHT
