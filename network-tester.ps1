@@ -1,9 +1,8 @@
 #Requires -Version 5.1
 <#
 .CLAUDE_NOTICE
-    THIS PROJECT WAS VIBE CODED BY CLAUDE SONNET 4.6 FOR VERSION 1.0.0
+    THIS PROJECT WAS VIBE CODED BY CLAUDE SONNET 4.6 FOR VERSION 1.0
     USE AT YOUR OWN RISK
-    Only version 1.0.0 was written by Claude, modifications are fully human written, but this notice will remain in all versions of the script
 .VERSION
     Network Reliability Tester Version 1.0.0
 .COPYRIGHT
@@ -48,8 +47,8 @@ $PingTargets = [ordered]@{
 }
 
 $PacketSizes    = @(32, 128, 512, 1024, 1472)  # bytes: small game, med, large, near-MTU, max MTU payload
-$PingCount      = 5                  # pings per target per interval
-$IntervalSecs   = 60                 # seconds between measurement rounds
+$PingCount      = 10                 # pings per target per interval
+$IntervalSecs   = 120                 # seconds between measurement rounds
 $SpeedTestEvery = 5                  # run a speed test every N rounds
 $SpeedTestUrl   = "https://speed.cloudflare.com/__down?bytes=25000000"  # 25 MB download
 
@@ -59,7 +58,7 @@ $SpeedTestUrl   = "https://speed.cloudflare.com/__down?bytes=25000000"  # 25 MB 
 Clear-Host
 Write-Host ""
 Write-Host "  +--------------------------------------------------+" -ForegroundColor Cyan
-Write-Host "  |        WiFi Reliability Tester v1.0.1            |" -ForegroundColor Cyan
+Write-Host "  |        WiFi Reliability Tester v1.0.1b           |" -ForegroundColor Cyan
 Write-Host "  +--------------------------------------------------+" -ForegroundColor Cyan
 Write-Host ""
 
@@ -180,8 +179,8 @@ function Invoke-SpeedTest {
 #  MAIN LOOP
 # -----------------------------------------------------------------
 Write-Host ""
-Write-Host ("  {0,-22} {1,-18} {2,8} {3,8} {4,8} {5,8}" -f "Target","Size","Avg ms","Loss%","Min ms","Max ms") -ForegroundColor Cyan
-Write-Host ("  " + ("-" * 80)) -ForegroundColor DarkGray
+Write-Host ("  {0,-36} {1,-10} {2,8} {3,8} {4,8} {5,8}" -f "Target","Size","Avg ms","Loss%","Min ms","Max ms") -ForegroundColor Cyan
+Write-Host ("  " + ("-" * 86)) -ForegroundColor DarkGray
 
 while ((Get-Date) -lt $EndTime) {
     $Round++
@@ -236,7 +235,7 @@ while ((Get-Date) -lt $EndTime) {
             $avgDisplay   = if ($null -ne $r.AvgMs) { "$($r.AvgMs) ms" } else { "TIMEOUT" }
             $deltaDisplay = if (($null -ne $delta) -and ($size -ne $PacketSizes[0])) { "(+$delta)" } else { "" }
 
-            Write-Host ("  {0,-22} {1,-18} {2,8} {3,8} {4,8} {5,8} {6}" -f `
+            Write-Host ("  {0,-36} {1,-10} {2,8} {3,8} {4,8} {5,8} {6}" -f `
                 $name, "${size}B", $avgDisplay, "$($r.LossPct)%", "$($r.MinMs)ms", "$($r.MaxMs)ms", $deltaDisplay) `
                 -ForegroundColor $color
         }
