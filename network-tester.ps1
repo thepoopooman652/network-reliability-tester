@@ -23,19 +23,32 @@
 #  CONFIG
 # -----------------------------------------------------------------
 $PingTargets = [ordered]@{
-    "Cloudflare DNS"      = "1.1.1.1"
-    "Google DNS"          = "8.8.8.8"
-    "Steam (Valve)"       = "208.64.200.1"
-    "Valve CS2 (US East)" = "162.254.193.6"    # Valve SDR US-East, confirmed ICMP
-    "Level3 Backbone"     = "4.2.2.2"          # Lumen/Level3 Tier-1 carrier, carries traffic for most game servers, always responds to ICMP
-    "PSN (Sony)"          = "69.36.135.129"    # Sony Interactive Entertainment LLC own ASN, LA datacenter
-    "Battle.net"          = "166.117.114.163"
-    "Microsoft (Bing)"    = "204.79.197.200"
+    "Cloudflare DNS"                 = "1.1.1.1"          # Reliable DNS Resolver, good for testing basic internet usage
+    "Google DNS"                     = "8.8.8.8"          # Reliable DNS Resolver, good for testing basic internet usage
+    "Steam (Valve)"                  = "208.64.200.1"     # Steam game servers - confirmed pingable by Steam themsleves
+    "Valve CS2 (US East)"            = "162.254.193.6"    # Valve SDR US-East, confirmed ICMP
+    "Level3 Backbone"                = "4.2.2.2"          # Lumen/Level3 Tier-1 carrier, carries traffic for most game servers, always responds to ICMP
+    "PSN (Sony)"                     = "69.36.135.129"    # Sony Interactive Entertainment LLC own ASN, LA datacenter
+    "Battle.net"                     = "166.117.114.163"  # battle.net resolves to this IP, and is confirmed pingable via ICMP
+    "Microsoft (Bing)"               = "204.79.197.200"   # Microsoft Bing, here for testing access to search engines and Microsoft services
+    "AWS Global Accelerator"         = "99.83.190.102"    # AWS Global Accelerator, tests connectivity to AWS backbone
+    "Google Cloud DNS"               = "8.8.4.4"          # Secondary Google DNS, tests connectivity to Google Cloud
+    "Google Cloud LB US-East"        = "34.102.136.180"   # Google Cloud HTTP(S) LB anycast IP, tests connectivity to GCP edge
+    "Fastly CDN Edge"                = "199.232.0.1"      # Fastly CDN anycast IP, tests connectivity to Fastly edge (hosts many popular sites like Reddit/GitHub)
+    "Fastly CDN US"                  = "151.101.0.1"      # Fastly CDN anycast IP, tests connectivity to Fastly edge (hosts many popular sites like Reddit/GitHub)
+    "Google Cloud Anycast"           = "34.36.0.1"        # Google Cloud general anycast IP, tests connectivity to GCP edge
+    "Cloudflare Workers"             = "104.21.0.1"       # Cloudflare Workers platform anycast IP, tests connectivity to Cloudflare edge
+    "Azure Traffic Manager"          = "13.107.42.14"     # Azure Traffic Manager anycast IP, tests connectivity to Azure edge
+    "Cloudflare CDN Edge"            = "104.16.0.1"       # Cloudflare CDN anycast IP, tests connectivity to Cloudflare edge
+    "OVH BHS (Canada)"               = "51.79.0.1"        # OVHcloud Beauharnois datacenter in Canada, tests connectivity to OVH edge in North America
+    "DigitalOcean NYC1"              = "67.205.133.197"   # DigitalOcean NYC1 datacenter edge, tests connectivity to DigitalOcean's NYC datacenter
+    "Cogent Communications"          = "38.104.0.1"       # Cogent Tier-1 backbone, tests connectivity to Cogent's network which carries traffic for many providers
+    "Hurricane Electric"             = "216.218.186.2"    # Hurricane Electric (HE.net) Tier-1 backbone, known for responding to ICMP, tests connectivity to HE's network which carries traffic for many providers
 }
 
 $PacketSizes    = @(32, 128, 512, 1024, 1472)  # bytes: small game, med, large, near-MTU, max MTU payload
 $PingCount      = 5                  # pings per target per interval
-$IntervalSecs   = 30                 # seconds between measurement rounds
+$IntervalSecs   = 60                 # seconds between measurement rounds
 $SpeedTestEvery = 5                  # run a speed test every N rounds
 $SpeedTestUrl   = "https://speed.cloudflare.com/__down?bytes=25000000"  # 25 MB download
 
@@ -45,7 +58,7 @@ $SpeedTestUrl   = "https://speed.cloudflare.com/__down?bytes=25000000"  # 25 MB 
 Clear-Host
 Write-Host ""
 Write-Host "  +--------------------------------------------------+" -ForegroundColor Cyan
-Write-Host "  |         WiFi Reliability Tester v1.0            |" -ForegroundColor Cyan
+Write-Host "  |        WiFi Reliability Tester v1.0.1            |" -ForegroundColor Cyan
 Write-Host "  +--------------------------------------------------+" -ForegroundColor Cyan
 Write-Host ""
 
