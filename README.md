@@ -2,7 +2,7 @@
 
 A PowerShell script that tests the reliability and performance of your WiFi (or any network connection) over a user-defined period of time. Pings multiple targets with varying packet sizes, runs periodic download and upload speed tests, and generates a self-contained dark-themed HTML report at the end.
 
-> **Note:** Version 1.0 was vibe coded by [Claude Sonnet 4.6](https://www.anthropic.com/claude). Use at your own risk.
+> **Note:** Version 1.0.0 was vibe coded by [Claude Sonnet 4.6](https://www.anthropic.com/claude). Use at your own risk.
 
 ---
 
