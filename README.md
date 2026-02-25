@@ -54,13 +54,22 @@ The script pings the following 8 targets. All IPs have been manually verified to
 | Target | IP | Notes |
 |---|---|---|
 | Cloudflare DNS | `1.1.1.1` | Anycast DNS resolver |
-| Google DNS | `8.8.8.8` | Anycast DNS resolver |
+| Google DNS (Primary) | `8.8.8.8` | Anycast DNS resolver |
+| Google DNS (Secondary) | `8.8.4.4` | Secondary GCP DNS resolver |
 | Steam (Valve) | `208.64.200.1` | Valve data center |
 | Valve CS2 (US East) | `162.254.193.6` | Valve SDR relay, US East |
-| Level3 Backbone | `4.2.2.2` | Lumen/Level3 Tier-1 carrier — carries traffic for most game servers |
-| PSN (Sony) | `69.36.135.129` | Sony Interactive Entertainment LLC own ASN, LA datacenter |
+| Level3 Backbone | `4.2.2.2` | Lumen/Level3 Tier-1 carrier |
+| PSN (Sony) | `69.36.135.129` | Sony Interactive Entertainment LLC, LA datacenter |
 | Battle.net | `166.117.114.163` | Resolved Battle.net IP, confirmed pingable |
 | Microsoft (Bing) | `204.79.197.200` | Azure/Microsoft edge, reliably responds to ICMP |
+| AWS Global Accelerator | `99.83.190.102` | AWS anycast edge; most other AWS IPs block ICMP |
+| Cloudflare CDN Edge | `104.16.0.1` | Cloudflare CDN anycast range (separate from DNS) |
+| Cloudflare Workers | `104.21.0.1` | Cloudflare Workers platform edge |
+| Fastly CDN | `151.101.0.1` | Fastly anycast CDN — carries Reddit, GitHub, Twitch |
+| Fastly CDN (Secondary) | `199.232.0.1` | Fastly secondary anycast range |
+| Hurricane Electric | `216.218.186.2` | HE.net Tier-1 backbone, known pingable |
+| Linode/Akamai Newark | `45.33.0.1` | Linode NJ (Akamai-owned cloud) |
+| Cogent Communications | `38.104.0.1` | Cogent Tier-1 backbone carrier |
 
 ---
 
