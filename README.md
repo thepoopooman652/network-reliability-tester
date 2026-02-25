@@ -9,7 +9,7 @@ A PowerShell script that tests the reliability and performance of your WiFi (or 
 ## Features
 
 - Prompts for a test duration (1–1440 minutes) and runs automatically
-- Pings **8 targets** every 30 seconds including DNS resolvers, gaming infrastructure, and backbone carriers
+- Pings **20 targets** every 60 seconds including DNS resolvers, gaming infrastructure, and backbone carriers
 - Tests **5 packet sizes** per target (32B, 128B, 512B, 1024B, 1472B) to detect MTU/congestion issues and simulate real-world traffic from small game packets up to large file transfers
 - Tracks avg/min/max ping, jitter, packet loss, and the ping delta as packet size increases relative to the 32B baseline
 - Runs a **25MB download speed test and a 10MB upload speed test** via the Cloudflare speed API every 5 rounds
