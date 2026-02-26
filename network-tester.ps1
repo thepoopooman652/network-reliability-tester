@@ -1,13 +1,13 @@
 #Requires -Version 5.1
 <#
 .CLAUDE_NOTICE
-    THIS PROJECT WAS VIBE CODED BY CLAUDE SONNET 4.6 FOR VERSION 1.0
+    THIS PROJECT WAS VIBE CODED BY CLAUDE SONNET 4.6 FOR VERSION 1.0.0
     USE AT YOUR OWN RISK
 .VERSION
-    Network Reliability Tester Version 1.0.0
+    Network Reliability Tester Version 1.0.0c
 .COPYRIGHT
     Copyright 2026 ProishTheIdiot
-    GNU General Public License v3 - See LICENSE file
+    GNU General Public License v3 - See LICENSE file (https://github.com/thepoopooman652/network-reliability-tester/blob/main/LICENSE)
 .GITHUB
     Original repository:
         https://github.com/thepoopooman652/network-reliability-tester/
