@@ -4,10 +4,10 @@
     THIS PROJECT WAS VIBE CODED BY CLAUDE SONNET 4.6 FOR VERSION 1.0
     USE AT YOUR OWN RISK
 .VERSION
-    Network Reliability Tester Version 1.0.0
+    Version 1.0.1c
 .COPYRIGHT
     Copyright 2026 ProishTheIdiot
-    GNU General Public License v3 - See LICENSE file
+    GNU General Public License v3 - See LICENSE file (https://github.com/thepoopooman652/network-reliability-tester/blob/main/LICENSE)
 .GITHUB
     Original repository:
         https://github.com/thepoopooman652/network-reliability-tester/
@@ -23,32 +23,19 @@
 #  CONFIG
 # -----------------------------------------------------------------
 $PingTargets = [ordered]@{
-    "Cloudflare DNS"                 = "1.1.1.1"          # Reliable DNS Resolver, good for testing basic internet usage
-    "Google DNS"                     = "8.8.8.8"          # Reliable DNS Resolver, good for testing basic internet usage
-    "Steam (Valve)"                  = "208.64.200.1"     # Steam game servers - confirmed pingable by Steam themsleves
-    "Valve CS2 (US East)"            = "162.254.193.6"    # Valve SDR US-East, confirmed ICMP
-    "Level3 Backbone"                = "4.2.2.2"          # Lumen/Level3 Tier-1 carrier, carries traffic for most game servers, always responds to ICMP
-    "PSN (Sony)"                     = "69.36.135.129"    # Sony Interactive Entertainment LLC own ASN, LA datacenter
-    "Battle.net"                     = "166.117.114.163"  # battle.net resolves to this IP, and is confirmed pingable via ICMP
-    "Microsoft (Bing)"               = "204.79.197.200"   # Microsoft Bing, here for testing access to search engines and Microsoft services
-    "AWS Global Accelerator"         = "99.83.190.102"    # AWS Global Accelerator, tests connectivity to AWS backbone
-    "Google Cloud DNS"               = "8.8.4.4"          # Secondary Google DNS, tests connectivity to Google Cloud
-    "Google Cloud LB US-East"        = "34.102.136.180"   # Google Cloud HTTP(S) LB anycast IP, tests connectivity to GCP edge
-    "Fastly CDN Edge"                = "199.232.0.1"      # Fastly CDN anycast IP, tests connectivity to Fastly edge (hosts many popular sites like Reddit/GitHub)
-    "Fastly CDN US"                  = "151.101.0.1"      # Fastly CDN anycast IP, tests connectivity to Fastly edge (hosts many popular sites like Reddit/GitHub)
-    "Google Cloud Anycast"           = "34.36.0.1"        # Google Cloud general anycast IP, tests connectivity to GCP edge
-    "Cloudflare Workers"             = "104.21.0.1"       # Cloudflare Workers platform anycast IP, tests connectivity to Cloudflare edge
-    "Azure Traffic Manager"          = "13.107.42.14"     # Azure Traffic Manager anycast IP, tests connectivity to Azure edge
-    "Cloudflare CDN Edge"            = "104.16.0.1"       # Cloudflare CDN anycast IP, tests connectivity to Cloudflare edge
-    "OVH BHS (Canada)"               = "51.79.0.1"        # OVHcloud Beauharnois datacenter in Canada, tests connectivity to OVH edge in North America
-    "DigitalOcean NYC1"              = "67.205.133.197"   # DigitalOcean NYC1 datacenter edge, tests connectivity to DigitalOcean's NYC datacenter
-    "Cogent Communications"          = "38.104.0.1"       # Cogent Tier-1 backbone, tests connectivity to Cogent's network which carries traffic for many providers
-    "Hurricane Electric"             = "216.218.186.2"    # Hurricane Electric (HE.net) Tier-1 backbone, known for responding to ICMP, tests connectivity to HE's network which carries traffic for many providers
+    "Cloudflare DNS"      = "1.1.1.1"
+    "Google DNS"          = "8.8.8.8"
+    "Steam (Valve)"       = "208.64.200.1"
+    "Valve CS2 (US East)" = "162.254.193.6"    # Valve SDR US-East, confirmed ICMP
+    "Level3 Backbone"     = "4.2.2.2"          # Lumen/Level3 Tier-1 carrier, carries traffic for most game servers, always responds to ICMP
+    "PSN (Sony)"          = "69.36.135.129"    # Sony Interactive Entertainment LLC own ASN, LA datacenter
+    "Battle.net"          = "166.117.114.163"
+    "Microsoft (Bing)"    = "204.79.197.200"
 }
 
 $PacketSizes    = @(32, 128, 512, 1024, 1472)  # bytes: small game, med, large, near-MTU, max MTU payload
-$PingCount      = 10                 # pings per target per interval
-$IntervalSecs   = 120                 # seconds between measurement rounds
+$PingCount      = 5                  # pings per target per interval
+$IntervalSecs   = 30                 # seconds between measurement rounds
 $SpeedTestEvery = 5                  # run a speed test every N rounds
 $SpeedTestUrl   = "https://speed.cloudflare.com/__down?bytes=25000000"  # 25 MB download
 
@@ -58,7 +45,7 @@ $SpeedTestUrl   = "https://speed.cloudflare.com/__down?bytes=25000000"  # 25 MB 
 Clear-Host
 Write-Host ""
 Write-Host "  +--------------------------------------------------+" -ForegroundColor Cyan
-Write-Host "  |        WiFi Reliability Tester v1.0.1b           |" -ForegroundColor Cyan
+Write-Host "  |         WiFi Reliability Tester v1.0.1c          |" -ForegroundColor Cyan
 Write-Host "  +--------------------------------------------------+" -ForegroundColor Cyan
 Write-Host ""
 
@@ -179,8 +166,8 @@ function Invoke-SpeedTest {
 #  MAIN LOOP
 # -----------------------------------------------------------------
 Write-Host ""
-Write-Host ("  {0,-36} {1,-10} {2,8} {3,8} {4,8} {5,8}" -f "Target","Size","Avg ms","Loss%","Min ms","Max ms") -ForegroundColor Cyan
-Write-Host ("  " + ("-" * 86)) -ForegroundColor DarkGray
+Write-Host ("  {0,-22} {1,-18} {2,8} {3,8} {4,8} {5,8}" -f "Target","Size","Avg ms","Loss%","Min ms","Max ms") -ForegroundColor Cyan
+Write-Host ("  " + ("-" * 80)) -ForegroundColor DarkGray
 
 while ((Get-Date) -lt $EndTime) {
     $Round++
@@ -235,7 +222,7 @@ while ((Get-Date) -lt $EndTime) {
             $avgDisplay   = if ($null -ne $r.AvgMs) { "$($r.AvgMs) ms" } else { "TIMEOUT" }
             $deltaDisplay = if (($null -ne $delta) -and ($size -ne $PacketSizes[0])) { "(+$delta)" } else { "" }
 
-            Write-Host ("  {0,-36} {1,-10} {2,8} {3,8} {4,8} {5,8} {6}" -f `
+            Write-Host ("  {0,-22} {1,-18} {2,8} {3,8} {4,8} {5,8} {6}" -f `
                 $name, "${size}B", $avgDisplay, "$($r.LossPct)%", "$($r.MinMs)ms", "$($r.MaxMs)ms", $deltaDisplay) `
                 -ForegroundColor $color
         }
@@ -419,7 +406,7 @@ $sb = New-Object System.Text.StringBuilder
 [void]$sb.AppendLine('<thead><tr><th>Time</th><th>Target</th><th>Bytes</th><th>Avg ms</th><th>Min ms</th><th>Max ms</th><th>Jitter</th><th>Loss%</th><th>Delta from 32B</th></tr></thead>')
 [void]$sb.AppendLine("<tbody>$rawRows</tbody></table></div></div>")
 [void]$sb.AppendLine('</div>')
-[void]$sb.AppendLine("<footer>Generated by WiFi Reliability Tester | $reportGenTime</footer>")
+[void]$sb.AppendLine("<footer>Generated by WiFi Reliability Tester | $reportGenTime<br>Copyright 2026 ProishTheIdiot | <a href='https://github.com/thepoopooman652/network-reliability-tester/blob/main/LICENSE'>License (GNU GPLv3)</a></footer>")
 [void]$sb.AppendLine('<script>')
 [void]$sb.AppendLine("const pingCtx = document.getElementById('pingChart').getContext('2d');")
 [void]$sb.AppendLine('new Chart(pingCtx, {')
@@ -430,7 +417,17 @@ $sb = New-Object System.Text.StringBuilder
 [void]$sb.AppendLine('  },')
 [void]$sb.AppendLine('  options: {')
 [void]$sb.AppendLine('    responsive: true, maintainAspectRatio: false,')
-[void]$sb.AppendLine("    plugins: { legend: { labels: { color: '#a0aec0' } } },")
+[void]$sb.AppendLine('    interaction: { mode: "index", intersect: false },')
+[void]$sb.AppendLine('    plugins: {')
+[void]$sb.AppendLine("      legend: { labels: { color: '#a0aec0', usePointStyle: true }, onClick: function(e, legendItem, legend) { const index = legendItem.datasetIndex; const ci = legend.chart; if (ci.isDatasetVisible(index)) { ci.hide(index); legendItem.hidden = true; } else { ci.show(index); legendItem.hidden = false; } } },")
+[void]$sb.AppendLine('      tooltip: {')
+[void]$sb.AppendLine('        mode: "index", intersect: false,')
+[void]$sb.AppendLine("        backgroundColor: '#1a1f2e', borderColor: '#2d3748', borderWidth: 1,")
+[void]$sb.AppendLine("        titleColor: '#e2e8f0', bodyColor: '#a0aec0', padding: 10,")
+[void]$sb.AppendLine('        itemSort: function(a, b) { return (b.raw === null ? -Infinity : b.raw) - (a.raw === null ? -Infinity : a.raw); },')
+[void]$sb.AppendLine('        callbacks: { label: function(ctx) { if (ctx.raw === null) return null; return " " + ctx.dataset.label + ": " + ctx.raw + " ms"; } }')
+[void]$sb.AppendLine('      }')
+[void]$sb.AppendLine('    },')
 [void]$sb.AppendLine('    scales: {')
 [void]$sb.AppendLine("      x: { ticks: { color: '#718096' }, grid: { color: '#2d3748' } },")
 [void]$sb.AppendLine("      y: { ticks: { color: '#718096' }, grid: { color: '#2d3748' }, title: { display: true, text: 'Round-trip time (ms)', color: '#718096' } }")
@@ -460,7 +457,16 @@ $sb = New-Object System.Text.StringBuilder
 [void]$sb.AppendLine('  },')
 [void]$sb.AppendLine('  options: {')
 [void]$sb.AppendLine('    responsive: true, maintainAspectRatio: false,')
-[void]$sb.AppendLine("    plugins: { legend: { labels: { color: '#a0aec0' } } },")
+[void]$sb.AppendLine('    interaction: { mode: "index", intersect: false },')
+[void]$sb.AppendLine('    plugins: {')
+[void]$sb.AppendLine("      legend: { labels: { color: '#a0aec0', usePointStyle: true }, onClick: function(e, legendItem, legend) { const index = legendItem.datasetIndex; const ci = legend.chart; if (ci.isDatasetVisible(index)) { ci.hide(index); legendItem.hidden = true; } else { ci.show(index); legendItem.hidden = false; } } },")
+[void]$sb.AppendLine('      tooltip: {')
+[void]$sb.AppendLine('        mode: "index", intersect: false,')
+[void]$sb.AppendLine("        backgroundColor: '#1a1f2e', borderColor: '#2d3748', borderWidth: 1,")
+[void]$sb.AppendLine("        titleColor: '#e2e8f0', bodyColor: '#a0aec0', padding: 10,")
+[void]$sb.AppendLine('        callbacks: { label: function(ctx) { if (ctx.raw === null) return null; return " " + ctx.dataset.label + ": " + ctx.raw + " Mbps"; } }')
+[void]$sb.AppendLine('      }')
+[void]$sb.AppendLine('    },')
 [void]$sb.AppendLine('    scales: {')
 [void]$sb.AppendLine("      x: { ticks: { color: '#718096' }, grid: { color: '#2d3748' } },")
 [void]$sb.AppendLine("      y: { ticks: { color: '#718096' }, grid: { color: '#2d3748' }, title: { display: true, text: 'Mbps', color: '#718096' } }")
